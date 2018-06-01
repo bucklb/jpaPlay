@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class HomeController {
 
@@ -95,7 +98,19 @@ public class HomeController {
 
     }
 
+    //
+    // Play with table (from stuff online that matches suspiciously well)
+    //
+    @GetMapping(value = {"/table"})
+    public String table(Model model)
+    {
 
+        List<Person> persons = personRepository.findAll();
+
+
+        model.addAttribute("persons", persons);
+        return "persons";
+    }
 
 
 
