@@ -13,7 +13,7 @@ public class PersonTests {
     final String FIRST_NAME="Fred";
     final String LAST_NAME ="Flintoff";
     final String EMAIL_ID  ="Freddy@Flintoff.com";
-    final int PERSON_ID=69;
+    final long PERSON_ID=69;
 
     final String TO_STRING="Person{" +
             "id=" + PERSON_ID +
