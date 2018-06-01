@@ -31,7 +31,7 @@ public class PersonController {
         return personRepository.save(person);
     }
 
-    // Get a Single Note
+    // Get a Single Person
     @GetMapping("/persons/{id}")
     public Person getPersonById(@PathVariable(value = "id") Long personId) {
         return personRepository.findById(personId)
