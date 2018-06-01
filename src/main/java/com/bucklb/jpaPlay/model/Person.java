@@ -22,7 +22,7 @@ public class Person implements Serializable {
     @Column(name = "email")
     private String email;
 
-
+    /*
     // Constructors
     public Person(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -32,7 +32,7 @@ public class Person implements Serializable {
 
     public Person() {
     }
-
+    */
 
     // Setters and getters
 

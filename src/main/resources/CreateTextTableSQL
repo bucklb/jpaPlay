@@ -1,0 +1,28 @@
+-- For whatever reason the DDL stuff doesn't kick in for the project (just generates reams and reams of errors)
+-- The DDL below seems to allow the creation of the needed table and then things just work
+--
+-- At some point could investigate quite why native DDL fails, but this wil do for now
+
+
+
+
+use `hb_student_tracker`;
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS `text`;
+
+CREATE TABLE `text` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `text` varchar(256) DEFAULT NULL,
+  `person_id` int(11) DEFAULT NULL,
+
+  PRIMARY KEY (`id`),
+
+  KEY `FK_PERSON_ID_idx` (`person_id`),
+
+  CONSTRAINT `FK_PERSON`
+  FOREIGN KEY (`person_id`)
+  REFERENCES `person` (`id`)
+
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

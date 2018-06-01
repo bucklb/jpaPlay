@@ -26,6 +26,7 @@ public class PersonTests {
     public void NodAndSmile() {
     }
 
+    /*
     @Test
     public void PersonConstructorAndGettersTest() {
         // Make sure what we create is what we see
@@ -43,8 +44,8 @@ public class PersonTests {
         person.setId(PERSON_ID);
 
         assertEquals(TO_STRING,person.toString());
-
     }
+    */
 
 // Serializable stuff ...
 

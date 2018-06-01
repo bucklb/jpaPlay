@@ -5,15 +5,15 @@ import com.bucklb.jpaPlay.repository.PersonRepository;
 import com.bucklb.jpaPlay.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class PersonController {
 
     @Autowired
@@ -25,7 +25,11 @@ public class PersonController {
         return personRepository.findAll();
     }
 
-    // Create a new Note
+    // Create a new Person
+    @PostMapping("/persons")
+    public Person createPerson(@Valid @RequestBody Person person){
+        return personRepository.save(person);
+    }
 
     // Get a Single Note
     @GetMapping("/persons/{id}")
@@ -34,9 +38,25 @@ public class PersonController {
                 .orElseThrow(() -> new ExceptionalException("Person", "id", personId));
     }
 
-    // Update a Note
+    // Update a Person
+    @PutMapping("/persons/{personId}")
+    public Person updatePerson(@PathVariable Long personId, @Valid @RequestBody Person postRequest) {
+        return personRepository.findById(personId).map(person -> {
+            person.setFirstName(postRequest.getFirstName());
+            person.setLastName(postRequest.getLastName());
+            person.setEmail(postRequest.getEmail());
+            return personRepository.save(person);
+        }).orElseThrow(() -> new ExceptionalException("PersonId " + personId + " not found","filler","filler"));
+    }
 
-    // Delete a Note
+    // Delete a Person
+    @DeleteMapping("/persons/{personId}")
+    public ResponseEntity<?> deletePerson(@PathVariable Long personId) {
+        return personRepository.findById(personId).map(person -> {
+            personRepository.delete(person);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ExceptionalException("personId " + personId + " not found","",""));
+    }
 
 
 
