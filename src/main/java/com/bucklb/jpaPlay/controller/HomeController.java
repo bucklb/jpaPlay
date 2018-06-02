@@ -120,13 +120,16 @@ public class HomeController {
     {
 
         List<Person> persons = personRepository.findAll();
-
         model.addAttribute("persons", persons);
-
 
         // The html to direct things to
         return "persons";
     }
+
+
+
+
+
 
 
 
