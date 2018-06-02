@@ -2,23 +2,34 @@ package com.bucklb.jpaPlay.controller;
 
 import com.bucklb.jpaPlay.exception.ExceptionalException;
 import com.bucklb.jpaPlay.model.Person;
+import com.bucklb.jpaPlay.model.Text;
 import com.bucklb.jpaPlay.repository.PersonRepository;
+import com.bucklb.jpaPlay.repository.TextRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/view")
 public class HomeController {
+
+    private static final String appName = "ThymeleafTour";
 
     @Autowired
     PersonRepository personRepository;
-    private static final String appName = "ThymeleafTour";
+
+    @Autowired
+    TextRepository textRepository;
+
 
     @GetMapping("/")
     public String home(Model model,
@@ -73,7 +84,7 @@ public class HomeController {
     // If we use "bucklb" it's a bit limiting ...
     //
     @GetMapping("/greet/{id}")
-    public String greetPersonById(Model model,@PathVariable(value = "id") Long personId) {
+    public String greetPersonById(Model model,@PathVariable(value = "id") Long personId, Pageable pageable) {
 
         System.out.println("Looking to greet a person with id = "+personId);
 
@@ -94,21 +105,26 @@ public class HomeController {
         model.addAttribute("name", showName);
         model.addAttribute("email", showEmail);
 
+        Page<Text> texts=textRepository.findByPersonId(personId,pageable);
+        model.addAttribute("texts",texts);
+
+
         return "greet";
 
     }
-
     //
-    // Play with table (from stuff online that matches suspiciously well)
+    // If we get /view/persons then populate a reasonable table to display (rather than the rather bald json in api)
     //
-    @GetMapping(value = {"/table"})
-    public String table(Model model)
+    @GetMapping(value = {"/persons"})
+    public String viewPersonsAsTable(Model model)
     {
 
         List<Person> persons = personRepository.findAll();
 
-
         model.addAttribute("persons", persons);
+
+
+        // The html to direct things to
         return "persons";
     }
 

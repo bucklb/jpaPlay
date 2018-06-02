@@ -39,7 +39,7 @@ public class TextController {
     }
 
     @PostMapping("/persons/{personId}/texts")
-    public Text createTextt(@PathVariable (value = "personId") Long personId,
+    public Text createText(@PathVariable (value = "personId") Long personId,
                                  @Valid @RequestBody Text text) {
         return personRepository.findById(personId).map(person -> {
             text.setPerson(person);
