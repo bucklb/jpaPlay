@@ -1,9 +1,6 @@
 package com.bucklb.jpaPlay.controller;
 
 
-//
-// Looking at texts by person, so use a bespoke controller
-//
 
 import com.bucklb.jpaPlay.exception.ExceptionalException;
 import com.bucklb.jpaPlay.model.Person;
@@ -17,6 +14,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+
+
+//
+// Looking at texts by person, so use a bespoke controller : Text API
+//
+//  GET  : /persons/{id}/texts  : return a LIST (array) of texts, and NOT a page thereof
+//  POST : /persons/{id}/texts  : create a new text for a given person
+//
 
 
 @RestController
@@ -29,13 +35,16 @@ public class TextController {
     private PersonRepository personRepository;
 
     @GetMapping("/persons/{personId}/texts")
-    public Page<Text> getAllTextsByPersonId(@PathVariable(value="personId") Long personId,
+//    public Page<Text> getAllTextsByPersonId(@PathVariable(value="personId") Long personId,
+    public List<Text> getAllTextsByPersonId(@PathVariable(value="personId") Long personId,
                                             Pageable pageable){
+        // Want to inspect the contents.
+//        Page<Text> response=textRepository.findByPersonId(personId,pageable);
+//        List<Text> texts=response.getContent();
+        List<Text> texts=textRepository.findByPersonId(personId,pageable);
 
-        System.out.println("Trying to get comments");
-
-        return textRepository.findByPersonId(personId,pageable);
-        // Stuck with convention?          return textRepository.findByMagic(personId,pageable);
+//        return response;
+        return texts;
     }
 
     @PostMapping("/persons/{personId}/texts")

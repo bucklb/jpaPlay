@@ -5,15 +5,25 @@ import com.bucklb.jpaPlay.repository.PersonRepository;
 import com.bucklb.jpaPlay.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+//
+// Controller for persons API
+//
+// GET  : /persons              - list all the people
+// POST : /persons              - add new person
+// GET  : /persons/{id}         - get specific person
+// PUT  : /persons/{id}         - amend specific person
+// DEL  : /persons/{id}         - delete specific person (except fails if person has texts)
+//
+
+
+
 @RestController
-//@RequestMapping("/api")
 public class PersonController {
 
     @Autowired
