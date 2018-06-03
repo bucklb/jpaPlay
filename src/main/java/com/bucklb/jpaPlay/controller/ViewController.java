@@ -25,7 +25,7 @@ import java.util.List;
 //
 
 @Controller
-@RequestMapping("/view")
+@RequestMapping("")
 public class ViewController {
 
     private static final String appName = "ThymeleafTour";
@@ -39,7 +39,7 @@ public class ViewController {
     //
     // Leave a spare endpoint (which happens to be from the tutorial in effect
     //
-    @GetMapping("/bucklb")
+    @GetMapping("/view/bucklb")
     public String bucklb(Model model,
                          @RequestParam(value = "name", required = false,
                                  defaultValue = "Guest") String name) {
@@ -53,7 +53,7 @@ public class ViewController {
     //
     // If we use "bucklb" it's a bit limiting ...
     //
-    @GetMapping("/{id}")
+    @GetMapping("/view/{id}")
     public String greetPersonById(Model model,@PathVariable(value = "id") Long personId, Pageable pageable) {
 
         System.out.println("Looking to greet a person with id = "+personId);
@@ -85,7 +85,7 @@ public class ViewController {
     //
     // If we get /view/persons then populate a reasonable table to display (rather than the rather bald json in api)
     //
-    @GetMapping(value = {""})
+    @GetMapping(value = {"/view"})
     public String viewPersonsAsTable(Model model)
     {
         List<Person> persons = personRepository.findAll();
@@ -95,6 +95,11 @@ public class ViewController {
         return "persons";
     }
 
+    // Redirect to swagger stuff (bvia an error page??)
+    @GetMapping("")
+    public String getSwagger(){
+        return "redirect:http://localhost:8090/swagger-ui.html";
+    }
 
 
 
